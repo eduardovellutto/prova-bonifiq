@@ -1,0 +1,55 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using ProvaPub.Domain.Exceptions;
+using System.Net;
+using System.Text.Json;
+
+namespace ProvaPub.MIddleweres
+{
+    public class ExceptionHandlingMiddleware
+    {
+        private readonly RequestDelegate _next;
+        private readonly ILogger<ExceptionHandlingMiddleware> _logger;
+
+        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
+        {
+            _next = next;
+            _logger = logger;
+        }
+
+        public async Task InvokeAsync(HttpContext context)
+        {
+            try
+            {
+                await _next(context);
+            }
+            catch (NoAvailableNumbersException ex)
+            {
+                await WriteProblemDetailsAsync(context, ex, HttpStatusCode.UnprocessableEntity, "No available numbers");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro inesperado");
+
+                await WriteProblemDetailsAsync(context, ex, HttpStatusCode.InternalServerError, "Unexpected error");
+            }
+        }
+
+        private static async Task WriteProblemDetailsAsync(HttpContext context, Exception ex, HttpStatusCode statusCode, string title)
+        {
+            var problem = new ProblemDetails
+            {
+                Type = $"https://httpstatuses.com/{(int)statusCode}",
+                Title = title,
+                Status = (int)statusCode,
+                Detail = ex.Message,
+                Instance = context.Request.Path
+            };
+
+            context.Response.ContentType = "application/problem+json";
+            context.Response.StatusCode = problem.Status ?? (int)statusCode;
+
+            var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            await context.Response.WriteAsync(JsonSerializer.Serialize(problem, options));
+        }
+    }
+}

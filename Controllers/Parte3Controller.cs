@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ProvaPub.Models;
-using ProvaPub.Repository;
-using ProvaPub.Services;
+using ProvaPub.Application.Services;
+using ProvaPub.Domain.Models;
+using ProvaPub.Infrastructure.Repository;
 
 namespace ProvaPub.Controllers
 {
@@ -17,12 +17,12 @@ namespace ProvaPub.Controllers
     /// Demonstre como você faria isso.
     /// </summary>
     [ApiController]
-	[Route("[controller]")]
-	public class Parte3Controller :  ControllerBase
-	{
-		[HttpGet("orders")]
-		public async Task<Order> PlaceOrder(string paymentMethod, decimal paymentValue, int customerId)
-		{
+    [Route("[controller]")]
+    public class Parte3Controller : ControllerBase
+    {
+        [HttpGet("orders")]
+        public async Task<Order> PlaceOrder(string paymentMethod, decimal paymentValue, int customerId)
+        {
             var contextOptions = new DbContextOptionsBuilder<TestDbContext>()
     .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Teste;Trusted_Connection=True;")
     .Options;
@@ -30,6 +30,6 @@ namespace ProvaPub.Controllers
             using var context = new TestDbContext(contextOptions);
 
             return await new OrderService(context).PayOrder(paymentMethod, paymentValue, customerId);
-		}
-	}
+        }
+    }
 }
