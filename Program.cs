@@ -1,5 +1,5 @@
 using ProvaPub.Extensions;
-using ProvaPub.MIddleweres;
+using ProvaPub.Middleweres;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -3,7 +3,7 @@ using ProvaPub.Domain.Exceptions;
 using System.Net;
 using System.Text.Json;
 
-namespace ProvaPub.MIddleweres
+namespace ProvaPub.Middleweres
 {
     public class ExceptionHandlingMiddleware
     {
@@ -25,6 +25,18 @@ namespace ProvaPub.MIddleweres
             catch (NoAvailableNumbersException ex)
             {
                 await WriteProblemDetailsAsync(context, ex, HttpStatusCode.UnprocessableEntity, "No available numbers");
+            }
+            catch (NoAvailableProductsException ex)
+            {
+                await WriteProblemDetailsAsync(context, ex, HttpStatusCode.UnprocessableEntity, "No available products");
+            }
+            catch (NoAvailableCustomersException ex)
+            {
+                await WriteProblemDetailsAsync(context, ex, HttpStatusCode.UnprocessableEntity, "No available customers");
+            }
+            catch (NoAvailablePaymentServiceException ex)
+            {
+                await WriteProblemDetailsAsync(context, ex, HttpStatusCode.UnprocessableEntity, "No available customers");
             }
             catch (Exception ex)
             {
