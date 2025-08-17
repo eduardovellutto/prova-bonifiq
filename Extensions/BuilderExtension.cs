@@ -20,6 +20,7 @@ namespace ProvaPub.Extensions
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IPurchaseService, PurchaseService>();
 
             builder.Services.AddScoped<IPaymentService, PixPaymentService>();
             builder.Services.AddScoped<IPaymentService, CreditcardPaymentService>();
