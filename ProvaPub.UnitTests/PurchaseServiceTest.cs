@@ -37,7 +37,8 @@ namespace ProvaPub.UnitTests
             var _ctx = GetInMemoryDbContext();
             var _purchaseService = new PurchaseService(_ctx);
 
-            await Assert.ThrowsExceptionAsync<InvalidOperationException>(async () => await _purchaseService.CustumerExists(fakeCustomerId));
+            var custumerExists = await _purchaseService.CustumerExists(fakeCustomerId);
+            Assert.IsFalse(custumerExists);
         }
 
         [TestMethod]

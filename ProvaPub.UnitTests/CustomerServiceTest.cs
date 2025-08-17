@@ -28,8 +28,9 @@ namespace ProvaPub.UnitTests
             var _ctx = GetInMemoryDbContext();
             var _purchaseService = new PurchaseService(_ctx);
             var _customerService = new CustomerService(_ctx, _purchaseService);
+            var canPurchase = await _customerService.CanPurchase(fakeCustomerId, purchaseValue);
 
-            await Assert.ThrowsExceptionAsync<InvalidOperationException>(async () => await _customerService.CanPurchase(fakeCustomerId, purchaseValue));
+            Assert.IsFalse(canPurchase.CanPurchase);
         }
 
         [TestMethod]
@@ -117,7 +118,7 @@ namespace ProvaPub.UnitTests
             var _purchaseService = new PurchaseService(_ctx);
             var _customerService = new CustomerService(_ctx, _purchaseService);
 
-            await Assert.ThrowsExceptionAsync<ArgumentOutOfRangeException>(async () => await _customerService.CanPurchase(fakeCustomerId, purchaseValue));
+            await Assert.ThrowsExceptionAsync<ArgumentOutOfRangeException>(async () => await _customerService.CanPurchase(fakeCustomerId, purchaseValue, bypassBusinessHour));
         }
 
         [TestMethod]
@@ -131,7 +132,7 @@ namespace ProvaPub.UnitTests
             var _purchaseService = new PurchaseService(_ctx);
             var _customerService = new CustomerService(_ctx, _purchaseService);
 
-            await Assert.ThrowsExceptionAsync<ArgumentOutOfRangeException>(async () => await _customerService.CanPurchase(fakeCustomerId, purchaseValue));
+            await Assert.ThrowsExceptionAsync<ArgumentOutOfRangeException>(async () => await _customerService.CanPurchase(fakeCustomerId, purchaseValue, bypassBusinessHour));
         }
 
         [TestMethod]
