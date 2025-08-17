@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProvaPub.Domain.Contracts;
 
-namespace ProvaPub.Controllers
+namespace ProvaPub.Api.Controllers
 {
 
     [ApiController]

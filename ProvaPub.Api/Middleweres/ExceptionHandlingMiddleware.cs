@@ -3,7 +3,7 @@ using ProvaPub.Domain.Exceptions;
 using System.Net;
 using System.Text.Json;
 
-namespace ProvaPub.Middleweres
+namespace ProvaPub.Api.Middleweres
 {
     public class ExceptionHandlingMiddleware
     {

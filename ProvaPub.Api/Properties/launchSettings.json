@@ -4,17 +4,17 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:7028",
-      "sslPort": 44368
+      "applicationUrl": "http://localhost:32746",
+      "sslPort": 44319
     }
   },
   "profiles": {
-    "ProvaPub": {
+    "ProvaPub.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7191;http://localhost:5155",
+      "applicationUrl": "https://localhost:7103;http://localhost:5279",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
